@@ -68,12 +68,30 @@ body {
 }
 
 button {
-  border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
   font-family: inherit;
   cursor: pointer;
   transition: background-color 0.5s;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: var(--foreground) !important;
+  caret-color: var(--foreground);
+}
+
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow:
+    0 0 0px 1000px white inset,
+    0 0 0px 2px color-mix(in oklab, var(--color-ring) 50%, transparent);
+  box-shadow:
+    0 0 0px 1000px white inset,
+    0 0 0px 2px color-mix(in oklab, var(--color-ring) 50%, transparent);
 }
 
 
