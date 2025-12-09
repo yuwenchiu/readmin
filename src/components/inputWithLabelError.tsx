@@ -50,9 +50,9 @@ function InputWithLabelError<TFieldValues extends FieldValues>({
                 onClick={() => setIsVisible((prev) => !prev)}
               >
                 {isVisible ? (
-                  <EyeClosed className="transition-all" />
+                  <Eye />
                 ) : (
-                  <Eye className="transition-all" />
+                  <EyeClosed />
                 )}
               </Button>
             )}

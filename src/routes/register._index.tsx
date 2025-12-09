@@ -109,7 +109,7 @@ function Register() {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex w-full max-w-96 flex-col gap-y-4"
+          className="w-full max-w-96"
         >
           <FieldGroup>
             <InputWithLabelError
