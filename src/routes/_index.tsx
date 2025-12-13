@@ -6,7 +6,6 @@ import bookBg from "@/assets/book-bg.webp";
 import bookContent from "@/assets/book-content.webp";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
-import LoadingPage from "@/components/loadingPage";
 
 // function FeatureBlock({
 //   title,
@@ -34,13 +33,11 @@ import LoadingPage from "@/components/loadingPage";
 // }
 
 function Home() {
-  const { claims, loading } = useAuth();
+  const { claims } = useAuth();
 
   if (claims) return <Navigate to="/dashboard" />
 
-  return loading ? (
-    <LoadingPage />
-  ) : (
+  return (
     <div className="h-[calc(100vh-64px)] overflow-hidden">
       <header className="mt-36 flex flex-col items-center 2xl:mt-80">
         <h1 className="text-5xl font-thin tracking-wider 2xl:text-6xl">

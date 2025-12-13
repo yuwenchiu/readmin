@@ -8,6 +8,7 @@ import {
 } from "react";
 import { supabase } from "./supabaseClient";
 import { jwtDecode } from "jwt-decode";
+import LoadingPage from "@/components/loadingPage";
 
 type AuthContextType = {
   claims: JwtPayload | undefined;
@@ -50,7 +51,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         loading,
       }}
     >
-      {children}
+      {loading ? <LoadingPage /> : children}
     </AuthContext>
   );
 }
