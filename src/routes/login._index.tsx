@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router";
-import InputWithLabelError from "@/components/inputWithLabelError";
+import InputWithLabelError from "@/components/InputWithLabelError";
 import { supabase } from "@/lib/supabaseClient";
 import { Spinner } from "@/components/ui/spinner";
 import { FieldGroup } from "@/components/ui/field";
@@ -49,7 +49,7 @@ function Login() {
     if (error) {
       setError("root", error);
 
-      if (isAuthError(error) && error.code === "invalid_credentials" ) {
+      if (isAuthError(error) && error.code === "invalid_credentials") {
         toast.error("Wrong email or password ⚡️", {
           description: "Please try again",
         });
@@ -68,7 +68,7 @@ function Login() {
   };
 
   return (
-    <div className="grid h-[calc(100vh-64px)] w-full place-items-center px-16 pt-8 pb-16">
+    <div className="mt-8 grid h-[calc(100vh-64px)] w-full place-items-center px-16 pt-8 pb-16">
       <section className="flex h-full w-full items-center justify-evenly rounded-4xl bg-white p-8">
         <div className="w-full max-w-96">
           <form onSubmit={handleSubmit(onSubmit)}>

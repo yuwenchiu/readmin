@@ -1,5 +1,7 @@
+import { AuthContainer } from "@/lib/auth";
+
 function Dashboard() {
-  return <div>Dashboard</div>
+  return <AuthContainer>Dashboard</AuthContainer>;
 }
 
 export default Dashboard;

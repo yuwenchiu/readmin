@@ -1,6 +1,8 @@
 import type { JwtPayload } from "@supabase/supabase-js";
 import {
   createContext,
+  Fragment,
+  startTransition,
   useContext,
   useEffect,
   useState,
@@ -8,7 +10,8 @@ import {
 } from "react";
 import { supabase } from "./supabaseClient";
 import { jwtDecode } from "jwt-decode";
-import LoadingPage from "@/components/loadingPage";
+import { Navigate } from "react-router";
+import { toast } from "sonner";
 
 type AuthContextType = {
   claims: JwtPayload | undefined;
@@ -32,14 +35,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if ( event === "SIGNED_OUT") {
-        setClaims(undefined);
-      } else if (session) {
-        const payload = jwtDecode<JwtPayload>(session?.access_token);
-        setClaims(payload);
-      }
-    });
+    } = supabase.auth.onAuthStateChange((event, session) =>
+      startTransition(() => {
+        if (event === "SIGNED_OUT") {
+          setClaims(undefined);
+        } else if (session) {
+          const payload = jwtDecode<JwtPayload>(session?.access_token);
+          setClaims(payload);
+        }
+      }),
+    );
 
     return () => subscription.unsubscribe();
   }, []);
@@ -51,10 +56,27 @@ export function AuthProvider({ children }: PropsWithChildren) {
         loading,
       }}
     >
-      {loading ? <LoadingPage /> : children}
+      {children}
     </AuthContext>
   );
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
+
+
+export function AuthContainer({ children }: PropsWithChildren) {
+  const { claims, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !claims) {
+      toast.info("Log in to continue");
+    }
+  }, [loading, claims]);
+
+  return !loading && !claims ? (
+    <Navigate to="/login" />
+  ) : (
+    <Fragment>{children}</Fragment>
+  );
+}

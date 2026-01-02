@@ -35,10 +35,10 @@ import { useAuth } from "@/lib/auth";
 function Home() {
   const { claims } = useAuth();
 
-  if (claims) return <Navigate to="/dashboard" />
+  if (claims) return <Navigate to="/dashboard" />;
 
   return (
-    <div className="h-[calc(100vh-64px)] overflow-hidden">
+    <div className="mt-8 h-[calc(100vh-64px)] overflow-hidden">
       <header className="mt-36 flex flex-col items-center 2xl:mt-80">
         <h1 className="text-5xl font-thin tracking-wider 2xl:text-6xl">
           Read Admin for YOU

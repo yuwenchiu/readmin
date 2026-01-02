@@ -1,15 +1,11 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "./components/ui/sonner";
 import { AuthProvider, useAuth } from "./lib/auth";
-import Header from "./components/header";
+import Header from "./components/Header";
 import { SidebarProvider } from "./components/ui/sidebar";
-import CustomSidebar from "./components/customSideBar";
+import CustomSidebar from "./components/CustomSideBar";
+import LoadingPage from "./components/LoadingPage";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,27 +27,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-function App() {
-  const { claims } = useAuth();
+const queryClient = new QueryClient();
 
-  return (
+function App() {
+  const { claims, loading } = useAuth();
+
+  return loading ? (
+    <LoadingPage />
+  ) : (
     <SidebarProvider>
       {claims ? <CustomSidebar /> : <Header />}
 
-      <div className="mx-auto mt-16 h-full min-h-[calc(100vh-64px)] w-full max-w-7xl px-8 antialiased">
+      <div className="mx-auto mt-8 h-full min-h-[calc(100vh-64px)] w-full max-w-7xl px-8 antialiased">
         <Outlet />
       </div>
-
-      <Toaster position="top-center" />
     </SidebarProvider>
   );
-
 }
 
 export default function Root() {
   return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <App />
+        <Toaster position="top-center" />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

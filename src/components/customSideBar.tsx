@@ -27,7 +27,7 @@ const items = [
   },
   {
     title: "Search",
-    to: "#",
+    to: "/search",
     icon: Search,
   },
   {
