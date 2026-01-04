@@ -1,4 +1,4 @@
-type GoogleBookItem = {
+export type GoogleBookItem = {
   id: string;
   title: string;
   subtitle?: string;
@@ -65,7 +65,14 @@ export const bookItemsMapper = ({
     const industryIdentifiers = volumeInfo.industryIdentifiers;
     const isbn =
       industryIdentifiers?.find((i) => i.type === "ISBN_13")?.identifier ??
-      industryIdentifiers?.find((i) => i.type === "ISBN_13")?.identifier;
+      industryIdentifiers?.find((i) => i.type === "ISBN_10")?.identifier;
+
+    const imageLinks = volumeInfo.imageLinks;
+    const imageLink =
+      imageLinks?.medium ??
+      imageLinks?.small ??
+      imageLinks?.thumbnail ??
+      imageLinks?.smallThumbnail;
 
     return {
       id,
@@ -74,6 +81,7 @@ export const bookItemsMapper = ({
       publishedDate: volumeInfo.publishedDate?.split("-").join("/"),
       isbn,
       categories: volumeInfo.categories ?? [],
+      imageLink,
     };
   }),
 });
