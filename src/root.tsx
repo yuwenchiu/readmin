@@ -4,7 +4,7 @@ import { Toaster } from "./components/ui/sonner";
 import { AuthProvider, useAuth } from "./lib/auth";
 import Header from "./components/Header";
 import { SidebarProvider } from "./components/ui/sidebar";
-import CustomSidebar from "./components/CustomSideBar";
+import AppSidebar from "./components/AppSidebar";
 import LoadingPage from "./components/LoadingPage";
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -36,7 +36,7 @@ function App() {
     <LoadingPage />
   ) : (
     <SidebarProvider>
-      {claims ? <CustomSidebar /> : <Header />}
+      {claims ? <AppSidebar /> : <Header />}
 
       <div className="mx-auto mt-8 h-full min-h-[calc(100vh-64px)] w-full max-w-7xl px-8 antialiased">
         <Outlet />

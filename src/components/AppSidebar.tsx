@@ -47,7 +47,7 @@ const items = [
   },
 ];
 
-export function CustomSidebar() {
+function AppSidebar() {
   const navigate = useNavigate();
   const { open } = useSidebar();
 
@@ -58,7 +58,7 @@ export function CustomSidebar() {
   };
 
   return (
-    <Sidebar collapsible="icon" className="relative">
+    <Sidebar collapsible="icon">
       <SidebarTrigger
         className={clsx(
           "absolute right-0 transition-transform duration-700",
@@ -109,4 +109,4 @@ export function CustomSidebar() {
   );
 }
 
-export default CustomSidebar;
+export default AppSidebar;
