@@ -20,7 +20,7 @@ export type GoogleBookItems = {
 
 export type GoogleBookResponse = {
   totalItems: number;
-  items: {
+  items?: {
     id: string;
     volumeInfo: {
       title: string;
@@ -61,7 +61,7 @@ export const bookItemsMapper = ({
   items,
 }: GoogleBookResponse): GoogleBookItems => ({
   totalItems,
-  items: items.map(({ id, volumeInfo }) => {
+  items: items!.map(({ id, volumeInfo }) => {
     const industryIdentifiers = volumeInfo.industryIdentifiers;
     const isbn =
       industryIdentifiers?.find((i) => i.type === "ISBN_13")?.identifier ??
@@ -86,7 +86,7 @@ export const bookItemsMapper = ({
   }),
 });
 
-export const DEFAULT_ITEMS_PER_PAGE = 20;
+const DEFAULT_ITEMS_PER_PAGE = 20;
 
 export const fetchGoogleBooks = async ({
   search,
@@ -100,10 +100,11 @@ export const fetchGoogleBooks = async ({
   const searchParams = new URLSearchParams({
     key: import.meta.env.VITE_GOOGLE_API_KEY,
     q: getQueryString(search),
-    langRestrict: "zh-TW",
-    country: "TW",
     maxResults: maxResults.toString(),
     startIndex: (page * maxResults).toString(),
+    langRestrict: "zh-TW",
+    country: "TW",
+    orderBy: "relevance",
   });
 
   const response = await fetch(

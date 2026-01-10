@@ -1,4 +1,3 @@
-import { DEFAULT_ITEMS_PER_PAGE } from "@/api/books";
 import {
   Pagination,
   PaginationContent,
@@ -9,20 +8,17 @@ import {
 
 type AppPaginationProps = {
   currPage: number;
-  totalItems: number;
-  itemsPerPage?: number;
+  hasNextPage?: boolean;
   showPageNumbers?: boolean;
   onChangePage: (newPage: number) => void;
 };
 
 function AppPagination({
   currPage,
-  totalItems,
-  itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
+  hasNextPage = true,
   showPageNumbers = false,
   onChangePage,
 }: AppPaginationProps) {
-  const hasNextPage = (currPage + 1) * itemsPerPage <= totalItems;
   return (
     <Pagination>
       <PaginationContent>
