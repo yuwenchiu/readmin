@@ -86,9 +86,11 @@ export const bookItemsMapper = ({
   }),
 });
 
+export const DEFAULT_ITEMS_PER_PAGE = 20;
+
 export const fetchGoogleBooks = async ({
   search,
-  maxResults = 24,
+  maxResults = DEFAULT_ITEMS_PER_PAGE,
   page = 0,
 }: {
   search: string;
