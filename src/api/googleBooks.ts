@@ -46,10 +46,12 @@ export type GoogleBookResponse = {
   }[];
 };
 
+export const isbnFormat = /^(?:\d{9}[\dX]|\d{13})$/;
+
 const getQueryString = (text: string) => {
   const digitsOnly = text.replace(/[-\s]/g, "");
 
-  if (/^\d{10}(\d{3})?$/.test(digitsOnly)) {
+  if (isbnFormat.test(digitsOnly)) {
     return `isbn:${digitsOnly}`;
   }
 
