@@ -107,6 +107,7 @@ export const fetchGoogleBooks = async ({
     langRestrict: "zh-TW",
     country: "TW",
     orderBy: "relevance",
+    printType: "books",
   });
 
   const response = await fetch(
