@@ -2,7 +2,12 @@ import type { GoogleBookItem } from "@/api/googleBooks";
 import { cx } from "class-variance-authority";
 import { BookText } from "lucide-react";
 
-function BookCover({ title, imageLink, className }: GoogleBookItem & React.ComponentPropsWithoutRef<"div">) {
+function BookCover({
+  title,
+  imageLink,
+  className,
+}: Pick<GoogleBookItem, "title" | "imageLink"> &
+  React.ComponentPropsWithoutRef<"div">) {
   return imageLink ? (
     <div className={cx("h-52 w-full", className)}>
       <img
