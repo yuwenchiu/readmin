@@ -76,6 +76,10 @@ export const bookItemsMapper = ({
       imageLinks?.thumbnail ??
       imageLinks?.smallThumbnail;
 
+    const language = volumeInfo.language?.startsWith("zh")
+      ? volumeInfo.language.split("-")[0]
+      : volumeInfo.language;
+
     return {
       id,
       ...volumeInfo,
@@ -84,6 +88,7 @@ export const bookItemsMapper = ({
       isbn,
       categories: volumeInfo.categories ?? [],
       imageLink,
+      language,
     };
   }),
 });
