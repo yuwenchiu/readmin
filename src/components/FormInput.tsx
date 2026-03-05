@@ -10,7 +10,7 @@ import { Eye, EyeClosed } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 
-function InputWithLabelError<TFieldValues extends FieldValues>({
+function FormInput<TFieldValues extends FieldValues>({
   name,
   label,
   control,
@@ -63,4 +63,4 @@ function InputWithLabelError<TFieldValues extends FieldValues>({
   );
 }
 
-export default InputWithLabelError;
+export default FormInput;

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router";
-import InputWithLabelError from "@/components/InputWithLabelError";
+import FormInput from "@/components/FormInput";
 import { supabase } from "@/lib/supabaseClient";
 import { Spinner } from "@/components/ui/spinner";
 import { FieldGroup } from "@/components/ui/field";
@@ -109,28 +109,28 @@ function Register() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-96">
           <FieldGroup>
-            <InputWithLabelError
+            <FormInput
               name="username"
               label="Username"
               control={control}
               autoComplete="username"
             />
 
-            <InputWithLabelError
+            <FormInput
               name="email"
               label="Email"
               control={control}
               autoComplete="email"
             />
 
-            <InputWithLabelError
+            <FormInput
               name="password"
               label="Password"
               control={control}
               type="password"
             />
 
-            <InputWithLabelError
+            <FormInput
               name="confirm"
               label="Confirm password"
               control={control}
