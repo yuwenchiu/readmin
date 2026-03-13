@@ -1,4 +1,4 @@
-import type { JwtPayload } from "@supabase/supabase-js";
+import type { Session } from "@supabase/supabase-js";
 import {
   createContext,
   Fragment,
@@ -9,27 +9,26 @@ import {
   type PropsWithChildren,
 } from "react";
 import { supabase } from "./supabaseClient";
-import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router";
 import { toast } from "sonner";
 
 type AuthContextType = {
-  claims: JwtPayload | undefined;
+  session: Session | null;
   loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
-  claims: undefined,
+  session: null,
   loading: true,
 });
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const [claims, setClaims] = useState<JwtPayload | undefined>(undefined);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getClaims().then(({ data }) => {
-      setClaims(data?.claims);
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
       setLoading(false);
     });
 
@@ -38,10 +37,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
     } = supabase.auth.onAuthStateChange((event, session) =>
       startTransition(() => {
         if (event === "SIGNED_OUT") {
-          setClaims(undefined);
+          setSession(null);
         } else if (session) {
-          const payload = jwtDecode<JwtPayload>(session?.access_token);
-          setClaims(payload);
+          setSession(session);
         }
       }),
     );
@@ -52,7 +50,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   return (
     <AuthContext
       value={{
-        claims,
+        session,
         loading,
       }}
     >
@@ -66,15 +64,15 @@ export const useAuth = () => useContext(AuthContext);
 
 
 export function AuthContainer({ children }: PropsWithChildren) {
-  const { claims, loading } = useAuth();
+  const { session, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && !claims) {
+    if (!loading && !session) {
       toast.info("Log in to continue");
     }
-  }, [loading, claims]);
+  }, [loading, session]);
 
-  return !loading && !claims ? (
+  return !loading && !session ? (
     <Navigate to="/login" />
   ) : (
     <Fragment>{children}</Fragment>

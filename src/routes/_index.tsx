@@ -33,9 +33,9 @@ import { useAuth } from "@/lib/auth";
 // }
 
 function Home() {
-  const { claims } = useAuth();
+  const { session } = useAuth();
 
-  if (claims) return <Navigate to="/dashboard" />;
+  if (session) return <Navigate to="/dashboard" />;
 
   return (
     <div className="mt-8 h-[calc(100vh-64px)] overflow-hidden">

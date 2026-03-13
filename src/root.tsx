@@ -30,13 +30,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 const queryClient = new QueryClient();
 
 function App() {
-  const { claims, loading } = useAuth();
+  const { session, loading } = useAuth();
 
   return loading ? (
     <LoadingPage />
   ) : (
     <SidebarProvider>
-      {claims ? <AppSidebar /> : <Header />}
+      {session ? <AppSidebar /> : <Header />}
 
       <div className="mx-auto mt-8 h-full min-h-[calc(100vh-64px)] w-full max-w-7xl px-8 antialiased">
         <Outlet />
