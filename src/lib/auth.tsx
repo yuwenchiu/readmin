@@ -62,6 +62,31 @@ export function AuthProvider({ children }: PropsWithChildren) {
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
+// eslint-disable-next-line react-refresh/only-export-components
+export async function fetchWithAuth(
+  url: RequestInfo,
+  init?: RequestInit
+) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const response = await fetch(url, {
+    ...init,
+    headers: {
+      ...(init?.headers || {}),
+      apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      Authorization: session?.access_token
+        ? `Bearer ${session.access_token}`
+        : "",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+  return response.json();
+}
 
 export function AuthContainer({ children }: PropsWithChildren) {
   const { session, loading } = useAuth();
